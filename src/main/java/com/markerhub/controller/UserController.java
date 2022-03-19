@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.markerhub.common.lang.Result;
 import com.markerhub.entity.User;
 import com.markerhub.service.UserService;
 
@@ -30,13 +31,12 @@ public class UserController {
 	@GetMapping("/index")
 	public Object index() {
 		
-		Console.log("===========>>>>>>>>", DateUtil.date());
-
-		int year = DateUtil.year(new DateTime());
-		Console.log("===========>>>>>>>>", year);
+		Console.log("===========>>>>>>>>", DateUtil.date());		
 		
-//		User user = userService.getById(1L)a
-		return userService.getById(1);
+		User user = userService.getById(1);
+		Console.log(user);
+		return Result.succ( user);
+		
 	}
 	
 }

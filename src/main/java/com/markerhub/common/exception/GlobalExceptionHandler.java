@@ -19,14 +19,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(value = ShiroException.class)
     public Result handler(ShiroException e) {
-        log.error("运行时异常[shiro]/running error[shiro]：---------------------{}", e);
+        log.error("运行时异常[shiro]/running exception[shiro]：---------------------{}", e);
         return Result.fail(401, e.getMessage(), null);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Result handler(MethodArgumentNotValidException e) {
-        log.error("实体校验异常/entity validate error：---------------------{}", e);
+        log.error("实体校验异常/entity validate exception：---------------------{}", e);
         BindingResult bindingResult = e.getBindingResult();
         ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();
 
@@ -34,9 +34,16 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public Result handler(IllegalArgumentException e) {
+        log.error("Assert异常/Assert exception：---------------------{}", e);
+        return Result.fail(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = RuntimeException.class)
     public Result handler(RuntimeException e) {
-        log.error("运行时异常/running error：---------------------{}", e);
+        log.error("运行时异常/running exception：---------------------{}", e);
         return Result.fail(e.getMessage());
     }
 
